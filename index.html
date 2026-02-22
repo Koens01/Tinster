@@ -24,8 +24,20 @@
     .hint{font-size:.9rem;color:var(--mut)}
     a.link{color:#65b5ff;text-decoration:none}
   </style>
-  <!-- html5-qrcode via jsDelivr -->
-  <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.10/html5-qrcode.min.js"></script>
+  <!-- Primary CDN (unpkg) -->
+<script
+  src="https://unpkg.com/html5-qrcode@2.3.10/minified/html5-qrcode.min.js"
+  crossorigin="anonymous"
+  defer
+  onerror="console.warn('unpkg failed, trying jsDelivr…')">
+</script>
+
+<!-- Fallback CDN (jsDelivr) -->
+<script
+  src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.10/minified/html5-qrcode.min.js"
+  crossorigin="anonymous"
+  defer
+  onerror="console.error('Both CDNs failed to load html5-qrcode');">
 </head>
 <body>
   <div class="wrap">
