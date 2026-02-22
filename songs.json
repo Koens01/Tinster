@@ -1,0 +1,23 @@
+
+[
+  {
+    "Code": "Y1976",
+    "Jaar": 1976,
+    "Artiest": "",
+    "Titel": "",
+    "Service": "YouTube",
+    "Link": "https://www.youtube.com/watch?v=",
+    "QRText": "SONG:Y1976",
+    "Notities": "Voorbeeld: code Y1976 mapped naar YouTube-link"
+  },
+  {
+    "Code": "Y1977",
+    "Jaar": 1977,
+    "Artiest": "",
+    "Titel": "",
+    "Service": "YouTube",
+    "Link": "https://www.youtube.com/watch?v=",
+    "QRText": "SONG:Y1977",
+    "Notities": "Vul artiest/titel en de juiste link in"
+  }
+]
