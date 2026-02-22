@@ -32,35 +32,62 @@ function setYearVisible(v, value) {
 function enable(btnId, v) { document.getElementById(btnId).disabled = !v; }
 
 async function startScan() {
-  setYearVisible(false);
-  enable('btn-year', false);
-  enable('btn-stop', true);
+  try {
+    // 1) Preflight: forceer permissieprompt
+    if (navigator.mediaDevices?.getUserMedia) {
+      const tmpStream = await navigator.mediaDevices.getUserMedia({ video: true });
+      // meteen weer netjes sluiten
+      tmpStream.getTracks().forEach(t => t.stop());
+    }
 
-  const divId = 'preview';
-  const config = { fps: 10, qrbox: { width: 260, height: 260 }, rememberLastUsedCamera: true, aspectRatio: 1.0 };
+    setYearVisible(false);
+    enable('btn-year', false);
+    enable('btn-stop', true);
 
-  if (!scanner) {
-    scanner = new Html5Qrcode(divId, false);
+    const divId = 'preview';
+    const config = { fps: 10, qrbox: { width: 260, height: 260 }, rememberLastUsedCamera: true, aspectRatio: 1.0 };
+
+    if (!scanner) {
+      scanner = new Html5Qrcode(divId, /* verbose= */ false);
+    } else {
+      // als er nog oude preview staat, leeg die
+      document.getElementById(divId).innerHTML = '';
+    }
+
+    const cameras = await Html5Qrcode.getCameras();
+    if (!cameras || cameras.length === 0) {
+      alert('Geen camera gevonden of toegang geweigerd. Controleer browserpermissies en gebruik https.');
+      enable('btn-stop', false);
+      return;
+    }
+
+    const cameraId = cameras[0].id;
+    await scanner.start(
+      { deviceId: { exact: cameraId } },
+      config,
+      onScanSuccess,
+      (err) => { /* scan errors negeren */ }
+    );
+  } catch (e) {
+    console.error('StartScan fout', e);
+    alert('Kan de camera niet openen. Controleer permissies (Safari/Chrome) en https.');
+    enable('btn-stop', false);
   }
-
-  const cameras = await Html5Qrcode.getCameras();
-  const cameraId = cameras?.[0]?.id;
-  if (!cameraId) { alert('Geen camera gevonden.'); return; }
-
-  await scanner.start(
-    { deviceId: { exact: cameraId } },
-    config,
-    onScanSuccess,
-    (err) => {}
-  );
 }
 
 async function stopScan() {
-  if (scanner && scanner.getState() === Html5QrcodeScannerState.SCANNING) {
-    await scanner.stop();
+  try {
+    // Niet elke versie heeft getState(); gebruik defensieve checks
+    if (scanner && typeof scanner.stop === 'function') {
+      await scanner.stop();
+    }
+  } catch (e) {
+    // negeren
+  } finally {
+    const el = document.getElementById('preview');
+    if (el) el.innerHTML = '';
+    enable('btn-stop', false);
   }
-  document.getElementById('preview').innerHTML = '';
-  enable('btn-stop', false);
 }
 
 function extractSpotifyTrackId(urlOrUri) {
