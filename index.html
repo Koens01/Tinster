@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hipster 50 – QR Muziekspel</title>
+  <meta name="theme-color" content="#111" />
+  <style>
+    :root { --bg:#0f0f10; --fg:#f7f7f7; --acc:#ff5a5f; --mut:#9aa0a6; }
+    html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+    .wrap{max-width:720px;margin:0 auto;padding:20px}
+    h1{font-size:1.6rem;margin:0 0 8px}
+    p{color:var(--mut)}
+    .card{background:#17181a;border:1px solid #222;border-radius:12px;padding:16px;margin:16px 0}
+    .row{display:flex;gap:12px;flex-wrap:wrap}
+    button{appearance:none;border:0;border-radius:10px;padding:14px 18px;background:var(--acc);color:white;font-weight:600;cursor:pointer}
+    button.secondary{background:#2b2f33}
+    button:disabled{opacity:.4;cursor:not-allowed}
+    #preview{width:100%;min-height:260px;background:#0b0c0d;border:1px dashed #333;border-radius:12px}
+    .meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px;color:var(--mut)}
+    .year{font-size:1.2rem;font-weight:700;letter-spacing:.5px}
+    .song{font-weight:600}
+    .hint{font-size:.9rem;color:var(--mut)}
+    a.link{color:#65b5ff;text-decoration:none}
+  </style>
+  <!-- html5-qrcode via jsDelivr -->
+  <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.10/html5-qrcode.min.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Hipster 50 – QR Muziekspel</h1>
+    <p class="hint">Tik op <strong>Scan QR</strong>, richt op de kaart en het liedje start automatisch. Tik daarna op <strong>Toon jaar</strong> om het releasejaar te onthullen.</p>
+
+    <div class="card">
+      <div id="preview"></div>
+      <div class="row" style="margin-top:12px">
+        <button id="btn-scan">Scan QR</button>
+        <button id="btn-stop" class="secondary" disabled>Stop</button>
+        <button id="btn-year" class="secondary" disabled>Toon jaar</button>
+      </div>
+      <div class="meta">
+        <div>
+          <div class="song" id="songTitle">Geen nummer geselecteerd</div>
+          <div class="hint" id="songHint">Scan een kaart om te beginnen</div>
+        </div>
+        <div class="year" id="yearLabel" style="visibility:hidden"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="hint">Werkt met QR‑tekst in de vorm <code>SONG:Y1976</code>. De mapping van codes → links → jaren komt uit <code>songs.json</code>.</div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
