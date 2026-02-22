@@ -1,4 +1,6 @@
-{
+
+[
+  {
   "Code": "Y1984",
   "Jaar": 1984,
   "Artiest": "Prince",
@@ -7,7 +9,6 @@
   "Link": "https://open.spotify.com/track/54X78diSLoUDI3joC2bjMz",
   "QRText": "SONG:Y1984"
 }
-[
   {
     "Code": "Y1976",
     "Jaar": 1976,
